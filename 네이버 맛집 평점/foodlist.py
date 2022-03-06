@@ -53,9 +53,11 @@ print("스크롤 완료")
 # 맛집 li 가져오기---------------------------------
 # soup = BeautifulSoup(browser.page_source, "lxml")
 # soup가 페이지를 잘 가져왔는지 확인 : 페이지가 안가져와져ㅠㅠ
+# 동적 페이지에서는 로딩이 다 안되서 body가 저장안됨
 # with open("food.html", "w", encoding="utf8") as f:
 #     #f.write(soup.text) # html 문서 대충 보기
 #     f.write(soup.prettify()) # html 문서를 예쁘게 출력
+
 
 soup = BeautifulSoup(browser.page_source, "lxml")
 # foods = soup.find_all("div", attrs={"class":["ImZGtf mpg5gc", "Vpfmgd"]})

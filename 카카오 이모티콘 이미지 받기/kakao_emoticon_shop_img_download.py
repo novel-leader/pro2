@@ -1,4 +1,3 @@
-import imp
 from selenium import webdriver
 options = webdriver.ChromeOptions()
 options.headless = True
