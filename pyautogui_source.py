@@ -93,7 +93,8 @@ pyautogui.click(img2.left + 200, img2.top + 0)
 img1 = pyautogui.locateOnScreen("img1.png", grayscale=True)
 
 # 2. 범위지정
-img1 = pyautogui.locateOnScreen("img1.png", region=(x, y, width, height))
+img1 = pyautogui.locateOnScreen("img1.png", region=(0, 0, 500, 500))
+# x(left), y(top), width, height
 
 # 3. 정확도 조정
 # pip install opencv-python : confidence(신뢰성) 함수 설치
