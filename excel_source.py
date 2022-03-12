@@ -75,7 +75,7 @@ ws = wb.active
 # 활성화된 Sheet를 ws로 가져옴
 
 # cell 데이터 불러오기
- for x in range(1, 11):
+for x in range(1, 11):
      for y in range(1, 11):
          print(ws.cell(row=x, column=y).value, end=" ") # 1 2 3 4 ..
      print()
