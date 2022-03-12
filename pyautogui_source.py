@@ -52,6 +52,9 @@ pyautogui.write("12345", interval=0.2) # interval 입력 속도
 pyautogui.write(["t","e","s","t","left","enter"], interval=0.2)
 pyautogui.hotkey("shift", "3")
 pyautogui.press("enter")
+with pyautogui.hold('shift'):
+    pyautogui.press(['left', 'left', 'left'])
+
 
 # 한글입력
 # pip install pyperclip
