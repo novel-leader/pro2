@@ -1,6 +1,6 @@
 from selenium import webdriver
 options = webdriver.ChromeOptions()
-options.headless = True
+# options.headless = True
 options.add_argument("window-size=1920x1080")
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36")
 browser = webdriver.Chrome("C:/github/project2/chromedriver.exe", options=options)
@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 import time
 import urllib.request
 
-name = "another-duck"
+name = "nothing-is-better-than-ebichu_2"
 browser.get(f"https://e.kakao.com/t/{name}")
 time.sleep(5)
 
