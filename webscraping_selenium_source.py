@@ -61,7 +61,7 @@ for elem in elems:
     elem.get_attribute('href')
 # a 태그 모두 찾기
 
-## 키보드 입력
+## 키보드 입력(input 엘리먼트를 잘 찾아야함)
 elem = browser.find_element_by_id('query')
 elem.clear()
 elem.send_keys('')
