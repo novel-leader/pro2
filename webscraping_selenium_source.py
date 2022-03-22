@@ -114,7 +114,7 @@ elem.click()
 # pip install beautifulsoup4
 # pip install lxml
 from bs4 import BeautifulSoup
-# 뷰피풀숩 사용을 위한 import
+# 뷰티풀숩 사용을 위한 import
 soup = BeautifulSoup(browser.page_source, "lxml")
 # html정보를 lxml로 뷰티풀숩 객체로 만듦
 # lxml 구문분석 파써
@@ -128,10 +128,12 @@ img = soup.find("img")
 # 첫번째 img 태그 찾기
 a_tag = soup.find_all("a")[0]
 # 모든 a 태그 중 첫번째 a 태그 찾기
-a_tag = soup.find("a", attrs={"class":"Nbtn_upload"})
-# class="Nbtn_upload"인 a element 찾기
 a_tag = soup.find(attrs={"class":"Nbtn_upload"})
 # class="Nbtn_upload"인 어떤 element 찾기
+a_tag = soup.find("a", attrs={"class":"Nbtn_upload"})
+# class="Nbtn_upload"인 a element 찾기
+a_tag = soup.find("a", attrs={"class":"Nbtn_upload"})["href"]
+# class="Nbtn_upload"인 a element의 href어트리뷰트 값 추출
 
 ## 텍스트 출력
 texts = soup.find_all("div", attrs={"class":["ImZGtf mpg5gc", "Vpfmgd"]})

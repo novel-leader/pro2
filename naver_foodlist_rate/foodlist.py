@@ -1,9 +1,10 @@
+# %%
 from selenium import webdriver
 options = webdriver.ChromeOptions()
 # options.headless = True
 options.add_argument("window-size=1920x1080")
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36")
-browser = webdriver.Chrome(options=options)
+browser = webdriver.Chrome('C:/github/project2/chromedriver.exe', options=options)
 
 from selenium.webdriver.common.keys import Keys         # enter 입력키 가져오기
 from selenium.webdriver.common.by import By # browser.find_element(By.ID, 'query') 이형식으로 바꾸기
@@ -14,9 +15,24 @@ from bs4 import BeautifulSoup
 
 
 # 엑셀 리스트 불러오기
-# from openpyxl import load_workbook # 엑셀파일 불러오기
-# wb = load_workbook('./project2_foodrank/foodlist.xlsx') # sample.xlsx 파일에서 wb 을 불러옴
-# ws = wb.active # 활성화된 Sheet
+from openpyxl import load_workbook # 엑셀파일 불러오기
+wb = load_workbook('foodlist.xlsx') # sample.xlsx 파일에서 wb 을 불러옴
+ws = wb.active # 활성화된 Sheet
+
+si = []
+for x in range(2, ws.max_row + 1):
+    si.append(str(ws.cell(row=x, column=2).value))  # column=1는 A열
+print(si, len(si))
+
+gu = []
+for x in range(2, ws.max_row + 1):
+    gu.append(str(ws.cell(row=x, column=3).value))  # column=2는 B열
+print(gu, len(gu))
+
+for i in range(0, ws.max_row-1):
+    print(si[i], gu[i])
+
+i = 0
 
 # 페이지 이동
 browser.get("https://map.naver.com/v5/search/")
@@ -26,18 +42,16 @@ time.sleep(3)
 elem = browser.find_element(By.CLASS_NAME, 'input_box').find_element(By.TAG_NAME, 'input')
 ## send_keys입력은 input 태그에서만 가능
 elem.clear()
-elem.send_keys('마포구 맛집')
+elem.send_keys(si[i], ' ', gu[i],' 맛집')
 elem.send_keys(Keys.ENTER)
 
-
+time.sleep(1)
 # iframe 전환
 browser.switch_to.frame('searchIframe') # frame ID 입력하여 frame 전환
-# browser.switch_to.default_content() # 상위로 빠져 나옴
 
 # 하나 엘리먼트 지정 -> 문서 높이를 가져와서 스크롤 무한 반복
 elem = browser.find_element(By.XPATH, '//*[@id="_pcmap_list_scroll_container"]')
 # 하나씩 스크롤 다운
-# browser.execute_script('arguments[0].scrollBy(0, 200)', elem)
 # 스크롤 무한반복
 prev_height = browser.execute_script('return arguments[0].scrollHeight', elem)
 while True:
@@ -65,28 +79,40 @@ foodname = soup.find_all("li", attrs={"class":"_1EKsQ _12tNp"})
 print(len(foodname))
 
 for food in foodname:
+    # 음식점 이름 가져오기
     title = food.find("span", attrs={"class":"OXiLu"}).get_text()
-    
+    print(title)
 
-    ##############   여기까지 작업   #########################
-    # 할인 전 가격
-    original_price = food.find("span", attrs={"class":"OXiLu"})
-    if original_price:
-        original_price = original_price.get_text()
+    # 평점
+    rate = food.find("em")
+    if rate:
+        rate = rate.get_text()
+        print(rate)
     else:
-        continue
+        rate = 0
+        print(rate)
 
-    # 할인된 가격
-    price = food.find("span", attrs={"class":"VfPpfd ZdBevf i5DZme"}).get_text()
+    # 리뷰
+    review = food.find_all("span", string="리뷰")
+    if review:
+        review = review.get_text()
+        print(review)
+    else:
+        review = 0
+        print(review)
 
-    # 링크
-    link = food.find("a", attrs={"class":"JC71ub"})["href"]
-    # 올바른 링크 : https://play.google.com + link
+# %%
 
-    print(f"제목 : {title}")
-    print(f"할인 전 금액 : {original_price}")
-    print(f"할인 후 금액 : {price}")
-    print("링크 : ", "https://play.google.com" + link)
-    print("-" * 100)
+#     # 링크
+#     link = food.find("a", attrs={"class":"JC71ub"})["href"]
+#     # 올바른 링크 : https://play.google.com + link
 
-browser.quit()
+#     print(f"제목 : {title}")
+#     print(f"할인 전 금액 : {original_price}")
+#     print(f"할인 후 금액 : {price}")
+#     print("링크 : ", "https://play.google.com" + link)
+#     print("-" * 100)
+
+# browser.switch_to.default_content() # 상위로 빠져 나옴
+
+# browser.quit()
